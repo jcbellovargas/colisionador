@@ -1,12 +1,11 @@
 #include "Bola.h"
 #include "Vector2.h"
 
-Bola::Bola(int x, int y, int r)
+Bola::Bola(int x, int y, int r, int vx, int vy)
 {
-
-	Vector2* pos = new Vector2(x,y);
-	this->posicion = pos;
+	this->posicion = new Vector2(x, y);
 	this->radio = r;
+	this->velocidad = new Vector2(vx, vy);
 }
 
 Bola::~Bola()
@@ -16,6 +15,16 @@ Bola::~Bola()
 int Bola::GetRadio()
 {
 	return this->radio;
+}
+
+Vector2* Bola::GetVelocidad()
+{
+	return this->velocidad;
+}
+
+Vector2* Bola::GetPosicion()
+{
+	return this->posicion;
 }
 
 int Bola::Renderizar(SDL_Renderer* renderer)

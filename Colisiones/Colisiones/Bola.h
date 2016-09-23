@@ -1,19 +1,22 @@
 
 #pragma once
-#include "IRenderizable.h"
+#include "Renderizable.h"
 #include "Vector2.h"
 //El IRenderizable es para tipificar a todos los objetos que se pueden autorenderizar
-class Bola : IRenderizable
+class Bola : public Renderizable
 {
 public:
-	Bola(int x, int y, int r);
+	Bola(int x, int y, int r, int vx, int vy);
 	~Bola();
 
 	//Define como se renderiza esta Bola
 	int Renderizar(SDL_Renderer* renderer);
 	int GetRadio();
+	Vector2* GetPosicion();
+	Vector2* GetVelocidad();
 private:
 	Vector2* posicion;
+	Vector2* velocidad;
 	int radio;
 };
 
