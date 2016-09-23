@@ -36,7 +36,7 @@ void Vector2::SetY(float y)
 }
 float Vector2::Magnitud()
 {
-	sqrtf(MagnitudCuadrada());
+	return sqrtf(MagnitudCuadrada());
 }
 float Vector2::MagnitudCuadrada()
 {

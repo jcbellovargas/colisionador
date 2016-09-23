@@ -1,8 +1,9 @@
 
 #include <SDL.h>
 #include <stdio.h>
-#include <SDL2_gfxPrimitives.h>
+//#include <SDL2_gfxPrimitives.h>
 #include <iostream>
+#include "Bola.h"
 using namespace std;
 
 //Screen dimension constants
@@ -14,6 +15,17 @@ void init();
 int renderBola();
 int renderBola(int x, int y, int r);
 void close();
+
+int agregarBola()
+{
+	int r = rand() % (25 + 1);
+	// hay que tener en cuenta el radio para los limites de posibles valores de x e y
+	// random entre min y max ==> rand()%(max-min + 1) + min 
+	int x = rand() % (ANCHO_PANTALLA - 2 * r + 1) + r;
+	int y = rand() % (ALTURA_PANTALLA - 2 * r + 1) + r;
+	Bola* bola = new Bola(x, y, r);
+	return bola->Renderizar(renderer);
+}
 
 int main(int argc, char* args[])
 {
@@ -31,7 +43,12 @@ int main(int argc, char* args[])
 			}
 			else if (evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_SPACE)
 			{
-				renderBola();
+				int result = agregarBola();
+				if (result != 0)
+				{
+					cout << "SDL no pudo dibujar la bola. SDL_Error: " << SDL_GetError() << endl;
+				}
+				SDL_RenderPresent(renderer);
 			}
 		}
 	}
@@ -39,6 +56,8 @@ int main(int argc, char* args[])
 	
 	return 0;
 }
+
+
 
 void init()
 {
@@ -67,41 +86,10 @@ void init()
 
 }
 
-int renderBola()
-{
-	int r = rand() % (25 + 1);
-	// hay que tener en cuenta el radio para los limites de posibles valores de x e y
-	// random entre min y max ==> rand()%(max-min + 1) + min 
-	int x = rand() % (ANCHO_PANTALLA - 2*r + 1) + r;
-	int y = rand() % (ALTURA_PANTALLA - 2*r + 1) + r;
-
-	int result = filledCircleColor(renderer, x, y, r, 0xFF0000FF);
-	if (result != 0)
-	{
-		cout << "SDL no pudo dibujar la bola. SDL_Error: " << SDL_GetError() << endl;
-	}
-	SDL_RenderPresent(renderer);
-	return result;
-}
-
-int renderBola(int x, int y, int r)
-{
-	//int r = rand() % (25 + 1);
-	//int x = rand() % (ANCHO_PANTALLA + 1 - r);
-	//int y = rand() % (ALTURA_PANTALLA + 1 - r);
-
-	int result = filledCircleColor(renderer, x, y, r, 0xFF0000FF);
-	if (result != 0)
-	{
-		cout << "SDL no pudo dibujar la bola. SDL_Error: " << SDL_GetError() << endl;
-	}
-	SDL_RenderPresent(renderer);
-	return result;
-}
-
 void close()
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
+
