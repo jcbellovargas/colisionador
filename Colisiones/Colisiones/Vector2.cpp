@@ -48,11 +48,9 @@ void Vector2::Normalizar()
 	_x / a;
 	_y / a;
 }
-Vector2& Vector2::operator/(const float a)
+Vector2 Vector2::operator/(const float a) const
 {
-	this->_x / a;
-	this->_y / a;
-	return *this;
+	return Vector2(_x / a, _y / a);
 }
 
 Vector2& Vector2::operator/=(const float a)
@@ -69,19 +67,16 @@ Vector2& Vector2::operator*=(const float a)
 	return *this;
 }
 
-Vector2& Vector2::operator*(const float a)
+Vector2 Vector2::operator*(const float a) const
 {
-	this->_x * a;
-	this->_y * a;
-	return *this;
+	return Vector2(_x * a, _y * a);
 }
 
-Vector2& Vector2::operator+(const Vector2& vector)
+Vector2 Vector2::operator+(const Vector2& vector) const
 {
-	this->_x += vector._x;
-	this->_y += vector._y;
-	return *this;
+	return Vector2(_x + vector._x, _y + vector._y);
 }
+
 
 Vector2& Vector2::operator+=(const Vector2& vector)
 {
@@ -90,12 +85,11 @@ Vector2& Vector2::operator+=(const Vector2& vector)
 	return *this;
 }
 
-Vector2& Vector2::operator-(const Vector2& vector)
+Vector2 Vector2::operator-(const Vector2& vector) const
 {
-	this->_x -= vector._x;
-	this->_y -= vector._y;
-	return *this;
+	return Vector2(_x - vector._x, _y - vector._y);
 }
+
 
 Vector2& Vector2::operator-=(const Vector2& vector)
 {
@@ -116,11 +110,6 @@ bool Vector2::operator!=(const Vector2& vector)
 		return false;
 	return true;
 }
-Vector2& Vector2::operator=(const Vector2& vector)
-{
-	this->_x = vector._x;
-	this->_y == vector._y;
-	return *this;
-}
+
 
 

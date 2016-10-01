@@ -22,11 +22,11 @@ public:
 
 	bool operator==(const Vector2& vector);
 	bool operator!=(const Vector2& vector);
-	Vector2& operator=(const Vector2& vector);
-	Vector2& operator+(const Vector2& vector);
-	Vector2& operator-(const Vector2& vector);
-	Vector2& operator*(const float a);
-	Vector2& operator/(const float a);
+	Vector2 operator+(const Vector2& other) const;
+	Vector2 operator-(const Vector2& other) const;
+	Vector2 operator*(const float other) const;
+	Vector2 operator/(const float other) const;
+
 	Vector2& operator/=(const float a);
 	Vector2& operator*=(const float a);
 	Vector2& operator+=(const Vector2& vector);

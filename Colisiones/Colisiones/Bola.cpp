@@ -29,5 +29,7 @@ Vector2* Bola::GetPosicion()
 
 int Bola::Renderizar(SDL_Renderer* renderer)
 {
-	return filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio(), 0xFF0000FF);
+	filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio(), 0xFF000000);
+
+	return filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio()*0.97, 0xFF0000FF);
 }
