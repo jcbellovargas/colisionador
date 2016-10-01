@@ -4,12 +4,13 @@
 #include <iostream>
 #include "Bola.h"
 #include "Fisica.h"
+#include <math.h>
 #include <vector>
 
 using namespace std;
 
-const int ANCHO_PANTALLA = 640;
-const int ALTURA_PANTALLA = 480;
+const int ANCHO_PANTALLA = 1024;
+const int ALTURA_PANTALLA = 768;
 SDL_Window* window;
 SDL_Renderer* renderer;
 vector<Bola*> bolas;
@@ -89,8 +90,8 @@ void nuevaBola()
 	// random entre min y max ==> rand()%(max-min + 1) + min 
 	int x = rand() % (ANCHO_PANTALLA - 2 * r + 1) + r;
 	int y = rand() % (ALTURA_PANTALLA - 2 * r + 1) + r;
-	int vx = rand() % (5 - -5 + 1) + -5;
-	int vy = rand() % (5 - -5 + 1) + -5;
+	int vx = (rand() % 2 + 1) * pow(-1, rand());
+	int vy = (rand() % 2 + 1) * pow(-1, rand());
 
 	Bola* bola = new Bola(x, y, r, vx, vy);
 	bolas.push_back(bola);

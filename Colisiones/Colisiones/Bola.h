@@ -14,8 +14,8 @@ public:
 	int GetRadio();
 	Vector2* GetPosicion();
 	Vector2* GetVelocidad();
-	void SetPosicion(Vector2 pos);
-	void SetVelocidad(Vector2 vel);
+	void SetPosicion(Vector2 *pos);
+	void SetVelocidad(Vector2 *vel);
 private:
 	Vector2* posicion;
 	Vector2* velocidad;

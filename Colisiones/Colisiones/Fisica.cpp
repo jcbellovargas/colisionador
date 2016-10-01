@@ -23,7 +23,7 @@ void Fisica::CalcularColisionBolas(Bola* bola1, Bola* bola2)
 	Vector2 puntoCol = PuntoCercanoEnLinea(*bola1->GetPosicion(), *bola1->GetVelocidad(), *bola2->GetPosicion());
 
 	Vector2 puntoMedio = (*bola1->GetPosicion() + *bola2->GetPosicion()) / 2;
-	
+
 
 
 
@@ -31,7 +31,7 @@ void Fisica::CalcularColisionBolas(Bola* bola1, Bola* bola2)
 
 //Calcula el punto más cercano sobre una linea a otro punto. Necesario para calcular el lugar de collision
 //de las bolas
-Vector2 Fisica::PuntoCercanoEnLinea( Vector2 posicion,  Vector2 velocidad,  Vector2 punto)
+Vector2 Fisica::PuntoCercanoEnLinea(Vector2 posicion, Vector2 velocidad, Vector2 punto)
 {
 	Vector2 lineaFin = posicion + velocidad;
 	float a = lineaFin.GetY() - posicion.GetY();
@@ -79,34 +79,35 @@ bool Fisica::DetectarColisionPared(Bola bola, int alto, int ancho)
 // el de arriba para crear bolas adentro de los limites?
 bool Fisica::CalcularColisionPared(Bola *bola, int alto, int ancho)
 {
-	Vector2 pos = *bola->GetPosicion();
-	Vector2 vel = *bola->GetVelocidad();
+	Vector2 *pos = bola->GetPosicion();
+	Vector2 *vel = bola->GetVelocidad();
 	int radio = bola->GetRadio();
 	bool choque = false;
-	if (pos.GetX() < 0 + radio)
+	if (pos->GetX() < 0 + radio)
 	{
 		choque = true;
-		vel.SetX(abs(vel.GetX()));
+		vel->SetX(abs(vel->GetX()));
 	}
-	if (pos.GetY() < 0 + radio)
+	if (pos->GetY() < 0 + radio)
 	{
 		choque = true;
-		vel.SetY(-abs(vel.GetX()));
+		vel->SetY(abs(vel->GetX()));
 	}
-	if (pos.GetX() > ancho - radio)	{
+	if (pos->GetX() > ancho - radio)	{
 		choque = true;
-		vel.SetX(-abs(vel.GetX()));
+		vel->SetX(-abs(vel->GetX()));
 	}
-	if (pos.GetY() > alto - radio)	{
+	if (pos->GetY() > alto - radio)	{
 		choque = true;
-		vel.SetY(abs(vel.GetX()));
+		vel->SetY(-abs(vel->GetX()));
 	}
 
 	if (choque)
 	{
-		pos = pos + vel;
-		bola->SetPosicion(pos);
-		bola->SetVelocidad(vel);
+		pos->SetX(pos->GetX() + vel->GetX());
+		pos->SetY(pos->GetY() + vel->GetY());
+
+
 		return true;
 	}
 

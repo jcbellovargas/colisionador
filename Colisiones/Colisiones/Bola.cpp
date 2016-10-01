@@ -12,14 +12,14 @@ Bola::~Bola()
 {
 }
 
-void Bola::SetPosicion(Vector2 pos)
+void Bola::SetPosicion(Vector2 *pos)
 {
-	this->posicion = &pos;
+	this->posicion = pos;
 }
 
-void Bola::SetVelocidad(Vector2 vel)
+void Bola::SetVelocidad(Vector2 *vel)
 {
-	this->velocidad = &vel;
+	this->velocidad = vel;
 }
 
 int Bola::GetRadio()
