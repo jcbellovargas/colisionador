@@ -3,7 +3,7 @@
 #include <math.h>
 
 //Devuelve true si las bolas se intersectan
-bool Fisica::DetectarColision(Bola bola1, Bola bola2)
+bool Fisica::DetectarColisionBolas(Bola bola1, Bola bola2)
 {
 	Vector2 pos1 = *bola1.GetPosicion();
 	Vector2 pos2 = *bola2.GetPosicion();
@@ -15,7 +15,7 @@ bool Fisica::DetectarColision(Bola bola1, Bola bola2)
 
 //Modifica las velocidades de las bolas correspondiendo a la collision que se produjo
 //(no verifica collision)
-void Fisica::CalcularColision(Bola* bola1, Bola* bola2)
+void Fisica::CalcularColisionBolas(Bola* bola1, Bola* bola2)
 {
 	Vector2 velocidad1 = Vector2(0, 0);
 	Vector2 velocidad2 = Vector2(0, 0);
@@ -55,8 +55,63 @@ Vector2 Fisica::PuntoCercanoEnLinea( Vector2 posicion,  Vector2 velocidad,  Vect
 		return punto;
 	}
 
+
+
 }
 
+//True si la pelota se fue de los bordes
+//alto y ancho son de la pantalla
+bool Fisica::DetectarColisionPared(Bola bola, int alto, int ancho)
+{
+	Vector2 pos = *bola.GetPosicion();
+	int radio = bola.GetRadio();
+	if (pos.GetX() < 0 + radio) return true;
+	if (pos.GetY() < 0 + radio) return true;
+	if (pos.GetX() > ancho - radio) return true;
+	if (pos.GetY() > alto - radio) return true;
+
+	return false;
+}
+
+// Modifica la velocidad de la bola para que se mantenga adentro del borde
+// En teoría podríamos usar este para detectar colisiones ya que
+// no modifica los valores a menos que haya una colision y usar
+// el de arriba para crear bolas adentro de los limites?
+bool Fisica::CalcularColisionPared(Bola *bola, int alto, int ancho)
+{
+	Vector2 pos = *bola->GetPosicion();
+	Vector2 vel = *bola->GetVelocidad();
+	int radio = bola->GetRadio();
+	bool choque = false;
+	if (pos.GetX() < 0 + radio)
+	{
+		choque = true;
+		vel.SetX(abs(vel.GetX()));
+	}
+	if (pos.GetY() < 0 + radio)
+	{
+		choque = true;
+		vel.SetY(-abs(vel.GetX()));
+	}
+	if (pos.GetX() > ancho - radio)	{
+		choque = true;
+		vel.SetX(-abs(vel.GetX()));
+	}
+	if (pos.GetY() > alto - radio)	{
+		choque = true;
+		vel.SetY(abs(vel.GetX()));
+	}
+
+	if (choque)
+	{
+		pos = pos + vel;
+		bola->SetPosicion(pos);
+		bola->SetVelocidad(vel);
+		return true;
+	}
+
+	return false;
+}
 
 
 

@@ -12,6 +12,16 @@ Bola::~Bola()
 {
 }
 
+void Bola::SetPosicion(Vector2 pos)
+{
+	this->posicion = &pos;
+}
+
+void Bola::SetVelocidad(Vector2 vel)
+{
+	this->velocidad = &vel;
+}
+
 int Bola::GetRadio()
 {
 	return this->radio;

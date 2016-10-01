@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <iostream>
 #include "Bola.h"
+#include "Fisica.h"
 #include <vector>
+
 using namespace std;
 
 const int ANCHO_PANTALLA = 640;
@@ -20,6 +22,8 @@ void nuevaBola();
 void actualizarPosiciones();
 void renderizarTodo();
 void refreshRenderer();
+void colisionesPared();
+void collisionesBolas();
 
 int main(int argc, char* args[])
 {
@@ -40,6 +44,9 @@ int main(int argc, char* args[])
 			}
 		}
 		actualizarPosiciones();
+		//Supongo que collisiones de bolas va antes de paredes
+		//collisionesBolas();
+		colisionesPared();
 		renderizarTodo();
 	}
 	close();
@@ -84,6 +91,7 @@ void nuevaBola()
 	int y = rand() % (ALTURA_PANTALLA - 2 * r + 1) + r;
 	int vx = rand() % (5 - -5 + 1) + -5;
 	int vy = rand() % (5 - -5 + 1) + -5;
+
 	Bola* bola = new Bola(x, y, r, vx, vy);
 	bolas.push_back(bola);
 }
@@ -132,3 +140,12 @@ void close()
 	SDL_Quit();
 }
 
+
+void colisionesPared()
+{
+	for (std::vector<Bola*>::iterator it = bolas.begin(); it != bolas.end(); ++it)
+	{
+		Bola* b = *it;
+		Fisica::CalcularColisionPared(b, ALTURA_PANTALLA, ANCHO_PANTALLA);
+	}
+}
