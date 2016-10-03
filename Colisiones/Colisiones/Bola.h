@@ -6,7 +6,7 @@
 class Bola : public Renderizable
 {
 public:
-	Bola(int x, int y, int r, int vx, int vy);
+	Bola(int x, int y, int r, int vx, int vy, Uint32 color);
 	~Bola();
 
 	//Define como se renderiza esta Bola
@@ -16,9 +16,14 @@ public:
 	Vector2* GetVelocidad();
 	void SetPosicion(Vector2 *pos);
 	void SetVelocidad(Vector2 *vel);
+	void SetColor(Uint32 color);
+	int GetMasa();
+	Uint32 GetColor();
 private:
 	Vector2* posicion;
 	Vector2* velocidad;
+	Uint32 color;
 	int radio;
+	int masa;
 };
 

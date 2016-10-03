@@ -6,11 +6,14 @@
 #include "Fisica.h"
 #include <math.h>
 #include <vector>
+#include <time.h>
 
 using namespace std;
 
-const int ANCHO_PANTALLA = 1024;
-const int ALTURA_PANTALLA = 768;
+const int ANCHO_PANTALLA = 800;
+const int ALTURA_PANTALLA = 650;
+Uint32 COLOR_VERDE = 0xff00ff00;
+Uint32 COLOR_ROJO = 0xFF0000FF; 
 SDL_Window* window;
 SDL_Renderer* renderer;
 vector<Bola*> bolas;
@@ -24,11 +27,12 @@ void actualizarPosiciones();
 void renderizarTodo();
 void refreshRenderer();
 void colisionesPared();
-void collisionesBolas();
+void colisionesBolas();
 
 int main(int argc, char* args[])
 {
 	init();
+	srand(time(NULL));
 	bool salir = false;
 	SDL_Event evento;
 	while (!salir)
@@ -44,11 +48,14 @@ int main(int argc, char* args[])
 				nuevaBola();
 			}
 		}
-		actualizarPosiciones();
+		
 		//Supongo que collisiones de bolas va antes de paredes
-		//collisionesBolas();
-		colisionesPared();
+		
+		//colisionesPared();
+		colisionesBolas();
+		actualizarPosiciones();
 		renderizarTodo();
+		
 	}
 	close();
 	
@@ -85,15 +92,15 @@ void init()
 
 void nuevaBola()
 {
-	int r = rand() % (25 + 1);
+	int r = rand() % (25 - 15 + 1) + 15;
 	// hay que tener en cuenta el radio para los limites de posibles valores de x e y
 	// random entre min y max ==> rand()%(max-min + 1) + min 
 	int x = rand() % (ANCHO_PANTALLA - 2 * r + 1) + r;
 	int y = rand() % (ALTURA_PANTALLA - 2 * r + 1) + r;
-	int vx = (rand() % 2 + 1) * pow(-1, rand());
-	int vy = (rand() % 2 + 1) * pow(-1, rand());
+	int vx = ((rand() % 5 - 1 + 1) + 1) * pow(-1, rand());
+	int vy = ((rand() % 5 - 1 + 1) + 1) * pow(-1, rand());
 
-	Bola* bola = new Bola(x, y, r, vx, vy);
+	Bola* bola = new Bola(x, y, r, vx, vy, COLOR_ROJO);
 	bolas.push_back(bola);
 }
 
@@ -149,4 +156,24 @@ void colisionesPared()
 		Bola* b = *it;
 		Fisica::CalcularColisionPared(b, ALTURA_PANTALLA, ANCHO_PANTALLA);
 	}
+}
+
+void colisionesBolas()
+{
+	for (std::vector<Bola*>::iterator it = bolas.begin(); it != bolas.end(); ++it)
+	{
+		Bola* bolaActual = *it;
+		bolaActual->SetColor(COLOR_ROJO);
+		Fisica::CalcularColisionPared(bolaActual, ALTURA_PANTALLA, ANCHO_PANTALLA);
+		for (std::vector<Bola*>::iterator it = bolas.begin(); it != bolas.end(); ++it)
+		{
+			Bola* bola = *it;
+			if (bolaActual != bola && Fisica::DetectarColisionBolas(bolaActual, bola))
+			{
+				bolaActual->SetColor(COLOR_VERDE);
+				Fisica::CalcularColisionBolas(bolaActual, bola);
+			}
+		}
+	}
+
 }
