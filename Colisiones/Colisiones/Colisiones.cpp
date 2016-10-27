@@ -22,12 +22,12 @@ void init();
 int renderBola();
 int renderBola(int x, int y, int r);
 void close();
-void nuevaBola();
-void actualizarPosiciones();
-void renderizarTodo();
-void refreshRenderer();
+void inline nuevaBola();
+void inline actualizarPosiciones();
+void inline renderizarTodo();
+void inline refreshRenderer();
 void colisionesPared();
-void colisionesBolas();
+void inline colisionesBolas();
 
 int main(int argc, char* args[])
 {
@@ -170,8 +170,12 @@ void colisionesBolas()
 			Bola* bola = *it;
 			if (bolaActual != bola && Fisica::DetectarColisionBolas(bolaActual, bola))
 			{
-				bolaActual->SetColor(COLOR_VERDE);
-				Fisica::CalcularColisionBolas(bolaActual, bola);
+				if (bolaActual->GetColor() != COLOR_VERDE && bola->GetColor() != COLOR_VERDE)
+				{
+					bolaActual->SetColor(COLOR_VERDE);
+					bola->SetColor(COLOR_VERDE);
+					Fisica::CalcularColisionBolas(bolaActual, bola);
+				}
 			}
 		}
 	}

@@ -56,7 +56,7 @@ int Bola::GetMasa()
 
 int Bola::Renderizar(SDL_Renderer* renderer)
 {
-	filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio(), 0xFF000000);
+	//filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio(), 0xFF000000);
 
 	return filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio()*0.97, this->GetColor());
 }

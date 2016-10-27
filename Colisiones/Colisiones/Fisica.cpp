@@ -148,16 +148,12 @@ bool Fisica::CalcularColisionPared(Bola *bola, int alto, int ancho)
 		choque = true;
 		vel->SetY(-abs(vel->GetX()));
 	}
-
 	if (choque)
 	{
-		pos->SetX(pos->GetX() + vel->GetX());
-		pos->SetY(pos->GetY() + vel->GetY());
-
-
+		//pos->SetX(pos->GetX() + vel->GetX());
+		//pos->SetY(pos->GetY() + vel->GetY());
 		return true;
 	}
-
 	return false;
 }
 
