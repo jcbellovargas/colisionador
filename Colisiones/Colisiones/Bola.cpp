@@ -21,7 +21,21 @@ void Bola::SetPosicion(Vector2 *pos)
 
 void Bola::SetVelocidad(Vector2 *vel)
 {
+
 	this->velocidad = vel;
+
+	if (vel->MagnitudCuadrada() < 1)
+	{
+		this->velocidad->SetX(this->velocidad->GetX() * 2);
+		this->velocidad->SetY(this->velocidad->GetY() * 2);
+	}
+
+	if (vel->MagnitudCuadrada() > 25)
+	{
+		this->velocidad->SetX(this->velocidad->GetX() * 0.9);
+		this->velocidad->SetY(this->velocidad->GetY() * 0.9);
+	}
+
 }
 
 int Bola::GetRadio()
@@ -56,7 +70,7 @@ int Bola::GetMasa()
 
 int Bola::Renderizar(SDL_Renderer* renderer)
 {
-	//filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio(), 0xFF000000);
+	filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio(), 0xFF000000);
 
 	return filledCircleColor(renderer, this->posicion->GetX(), this->posicion->GetY(), this->GetRadio()*0.97, this->GetColor());
 }

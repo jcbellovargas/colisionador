@@ -42,6 +42,8 @@ void Fisica::CalcularColisionBolas(Bola* bola1, Bola* bola2)
 	// Necesitamos la norma del vector (n) que une a los dos centros(posiciones) de las bolas
 	float nx = (bola2->GetPosicion()->GetX() - bola1->GetPosicion()->GetX()) / distancia;
 	float ny = (bola2->GetPosicion()->GetY() - bola1->GetPosicion()->GetY()) / distancia;
+
+	SepararBolas(bola1, bola2);
 	double p = 2 * (bola1->GetVelocidad()->GetX() * nx + bola1->GetVelocidad()->GetY() * ny - bola2->GetVelocidad()->GetX() * nx - bola2->GetVelocidad()->GetY() * ny) /
 		(bola1->GetMasa() + bola2->GetMasa());
 
@@ -49,6 +51,7 @@ void Fisica::CalcularColisionBolas(Bola* bola1, Bola* bola2)
 	float vy1 = bola1->GetVelocidad()->GetY() - p * bola1->GetMasa() * ny;
 	float vx2 = bola2->GetVelocidad()->GetX() + p * bola2->GetMasa() * nx;
 	float vy2 = bola2->GetVelocidad()->GetY() + p * bola2->GetMasa() * ny;
+
 
 	bola1->SetVelocidad(new Vector2(vx1, vy1));
 	bola2->SetVelocidad(new Vector2(vx2, vy2));
@@ -124,37 +127,26 @@ bool Fisica::DetectarColisionPared(Bola bola, int alto, int ancho)
 // En teoría podríamos usar este para detectar colisiones ya que
 // no modifica los valores a menos que haya una colision y usar
 // el de arriba para crear bolas adentro de los limites?
-bool Fisica::CalcularColisionPared(Bola *bola, int alto, int ancho)
+void Fisica::CalcularColisionPared(Bola *bola, int alto, int ancho)
 {
 	Vector2 *pos = bola->GetPosicion();
 	Vector2 *vel = bola->GetVelocidad();
 	int radio = bola->GetRadio();
-	bool choque = false;
 	if (pos->GetX() < 0 + radio)
 	{
-		choque = true;
 		vel->SetX(abs(vel->GetX()));
 	}
 	if (pos->GetY() < 0 + radio)
 	{
-		choque = true;
-		vel->SetY(abs(vel->GetX()));
+		vel->SetY(abs(vel->GetY()));
 	}
-	if (pos->GetX() > ancho - radio)	{
-		choque = true;
+	if (pos->GetX() > ancho - radio)	
+	{
 		vel->SetX(-abs(vel->GetX()));
 	}
 	if (pos->GetY() > alto - radio)	{
-		choque = true;
-		vel->SetY(-abs(vel->GetX()));
+		vel->SetY(-abs(vel->GetY()));
 	}
-	if (choque)
-	{
-		//pos->SetX(pos->GetX() + vel->GetX());
-		//pos->SetY(pos->GetY() + vel->GetY());
-		return true;
-	}
-	return false;
 }
 
 
