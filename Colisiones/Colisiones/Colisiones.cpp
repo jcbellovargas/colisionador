@@ -7,6 +7,7 @@
 #include <math.h>
 #include <vector>
 #include <time.h>
+#include "Timer.h"
 
 using namespace std;
 
@@ -35,6 +36,12 @@ int main(int argc, char* args[])
 	srand(time(NULL));
 	bool salir = false;
 	SDL_Event evento;
+	//Contador fps
+	Timer timer;
+	int cuadrosTotal = 0;
+	float FPS = 0;
+	timer.Empezar();
+
 	while (!salir)
 	{
 		while (SDL_PollEvent(&evento) != 0)
@@ -55,6 +62,22 @@ int main(int argc, char* args[])
 		colisionesBolas();
 		actualizarPosiciones();
 		renderizarTodo();
+
+		//Calculo fps
+		FPS = cuadrosTotal / (timer.GetTicks() / 1000.f);
+		if (FPS > 1000)
+		{
+			FPS = 1000;
+		}
+
+		//Aquí va Renderizar FPS
+
+
+		cuadrosTotal++;
+
+
+
+
 		
 	}
 	close();
