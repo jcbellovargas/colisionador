@@ -7,7 +7,7 @@
 #include <math.h>
 #include <vector>
 #include <time.h>
-#include "Timer.h"
+#include "FPS.h"
 
 using namespace std;
 
@@ -18,6 +18,7 @@ Uint32 COLOR_ROJO = 0xFF0000FF;
 SDL_Window* window;
 SDL_Renderer* renderer;
 vector<Bola*> bolas;
+Archivo archivo;
 
 void init();
 int renderBola();
@@ -36,11 +37,10 @@ int main(int argc, char* args[])
 	srand(time(NULL));
 	bool salir = false;
 	SDL_Event evento;
-	//Contador fps
-	Timer timer;
-	int cuadrosTotal = 0;
-	float FPS = 0;
-	timer.Empezar();
+	int contadorBolas = 0;
+	FPS fps;
+
+
 
 	while (!salir)
 	{
@@ -53,6 +53,7 @@ int main(int argc, char* args[])
 			else if (evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_SPACE)
 			{
 				nuevaBola();
+				contadorBolas++;
 			}
 		}
 		
@@ -63,17 +64,9 @@ int main(int argc, char* args[])
 		actualizarPosiciones();
 		renderizarTodo();
 
-		//Calculo fps
-		FPS = cuadrosTotal / (timer.GetTicks() / 1000.f);
-		if (FPS > 1000)
-		{
-			FPS = 1000;
-		}
-
-		//Aquí va Renderizar FPS
+		fps.FinCuadro(contadorBolas);
 
 
-		cuadrosTotal++;
 
 
 
@@ -90,7 +83,7 @@ int main(int argc, char* args[])
 void init()
 {
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
 	{
 		cout << "SDL no pudo inicializar. SDL_Error: " << SDL_GetError() << endl;
 		exit;

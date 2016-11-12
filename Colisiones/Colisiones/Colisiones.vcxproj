@@ -69,15 +69,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Archivo.cpp" />
     <ClCompile Include="Bola.cpp" />
     <ClCompile Include="Colisiones.cpp" />
     <ClCompile Include="Fisica.cpp" />
+    <ClCompile Include="FPS.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Archivo.h" />
     <ClInclude Include="Bola.h" />
     <ClInclude Include="Fisica.h" />
+    <ClInclude Include="FPS.h" />
     <ClInclude Include="Renderizable.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector2.h" />
