@@ -1,6 +1,6 @@
 
 #include "Fisica.h"
-#include <math.h>
+#include <cmath>
 
 //Devuelve true si las bolas se intersectan
 //Las bolas se intersectan si la distancia entre sus centros es menor o igual a la suma de sus radios

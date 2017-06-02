@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Bola.h"
 #include "Fisica.h"
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <time.h>
 #include "FPS.h"
@@ -21,8 +21,8 @@ vector<Bola*> bolas;
 Archivo archivo;
 
 void init();
-int renderBola();
-int renderBola(int x, int y, int r);
+//int renderBola();
+//int renderBola(int x, int y, int r);
 void close();
 void inline nuevaBola();
 void inline actualizarPosiciones();
@@ -40,8 +40,6 @@ int main(int argc, char* args[])
 	int contadorBolas = 0;
 	FPS fps;
 
-
-
 	while (!salir)
 	{
 		while (SDL_PollEvent(&evento) != 0)
@@ -56,21 +54,10 @@ int main(int argc, char* args[])
 				contadorBolas++;
 			}
 		}
-		
-		//Supongo que collisiones de bolas va antes de paredes
-		
-		//colisionesPared();
 		colisionesBolas();
 		actualizarPosiciones();
 		renderizarTodo();
-
 		fps.FinCuadro(contadorBolas);
-
-
-
-
-
-
 		
 	}
 	close();
